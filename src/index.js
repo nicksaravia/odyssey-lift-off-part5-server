@@ -7,11 +7,16 @@ async function startApolloServer(typeDefs, resolvers) {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
+    csrfPrevention: true,
     dataSources: () => {
       return {
         trackAPI: new TrackAPI(),
       };
     },
+    cors: {
+      origin: ["https://studio.apollographql.com"]
+    },
+    
   });
 
   const { url, port } = await server.listen({port: process.env.PORT || 4000});
